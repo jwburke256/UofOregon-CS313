@@ -67,13 +67,11 @@ class mathOps:
         if tempV == 0:  # checks to see if floor is reached for tempV
             return tempU
         while tempU != tempV:
-            if tempU < 0 or tempV < 0:  # returns none if gcd doesn't exist in loop
-                return None
-            if tempU > tempV:
-                tempU = tempU - tempV
+            if tempV == 0:
+                return tempU
             else:
-                tempV = tempV - tempU
-        return tempU
+                return mathOps(tempV, tempU % tempV).gcd()
+
 
     def lcm(self):
         """Compute the least common multiple of member variables u and v."""
