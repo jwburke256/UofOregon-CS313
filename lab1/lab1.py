@@ -41,19 +41,19 @@ class Node(object):
 
     def setData(self, data):
         '''Set the "data" data field to the corresponding input.'''
-        pass
+        self.__data = data
 
     def setNext(self, next_node):
         '''Set the "next_node" data field to the corresponding input.'''
-        pass
+        self.__next_node = next_node
 
     def getData(self):
         '''Return the "data" data field.'''
-        pass
+        return self.__data
 
     def getNext(self):
         '''Return the "next_node" data field.'''
-        pass
+        return self.__next_node
 
 class Queue(object):
     """Provide class dosctring"""
@@ -86,10 +86,28 @@ class Queue(object):
 
 
 class Stack(object):
-    """Provide class dosctring"""
+    """
+    A class to represent a stack.
+
+    ...
+
+    Attributes
+    ----------
+    None
+
+    Methods
+    -------
+    push(newData):
+        Adds a new node to the top of the stack
+    pop():
+        Removes and returns the last submitted Node from the top of the stack
+    isEmpty():
+        Returns true if stack is empty, false if not
+    """
     def __init__(self):
         ''' We want to initialize our Stack to be empty.
         (ie) Set top as null'''
+        self.__top = None
 
     def __str__(self):
         '''Loop through your stack and print each Node's data.'''
@@ -99,7 +117,13 @@ class Stack(object):
         '''We want to create a node whose data is newData and next node is top.
         Push this new node onto the stack
         Update top'''
-        pass
+        newNode = Node(newData)
+        if self.isEmpty(): #uses isEmpty to determine if initial node needs to be added
+            self.__top = newNode
+        else:
+            newNode.setNext(self.__top)
+            self.__top = newNode
+
 
     def pop(self):
         ''' Return the Node that currently represents the top of the stack.
@@ -108,11 +132,20 @@ class Stack(object):
         #         to hold important information
         # Hint: Return null on a empty stack
         # Hint: Return the element(data) that is popped
-        pass
+        if self.isEmpty():
+            return None
+        else:
+            popNode = self.__top
+
+
+
 
     def isEmpty(self):
         '''Check if the Stack is empty.'''
-        pass
+        if self.__top is None
+            return True
+        else:
+            return False
 
 
 def isPalindrome(s):
