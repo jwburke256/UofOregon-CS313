@@ -26,6 +26,45 @@ class T1_TestingStack(unittest.TestCase):
         self.assertEqual(s.isEmpty(), False)
         print("\n")
 
+    def test_is_empty_true(self):
+        # testing if queue is empty
+        print("\n")
+        s = lab1.Stack()
+        print("return true if the stack is empty")
+        self.assertEqual(s.isEmpty(), True)
+        print("\n")
+
+    def test_basic_stack_str(self):
+        # testing the basic push operation
+        print("\n")
+        s = lab1.Stack()
+        s.push(4)
+        s.push(3)
+        s.push(2)
+        s.push(1)
+
+        self.assertEqual(s.__str__(), '[1, 2, 3, 4]')
+        print("\n")
+
+    def test_basic_stack_pop(self):
+        # testing the basic push operation
+        print("\n")
+        s = lab1.Stack()
+        s.push(1)
+        s.push(2)
+
+        self.assertEqual(s.pop(), 2)
+        self.assertEqual(s.__str__(), '[1]')
+        print("\n")
+
+    def test_stack_empty_pop(self):
+        # testing the basic push operation
+        print("\n")
+        s = lab1.Stack()
+
+        self.assertEqual(s.pop(), None)
+        print("\n")
+
 
 class T2_TestingPalindrome(unittest.TestCase):
 
