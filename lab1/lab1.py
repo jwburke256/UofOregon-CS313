@@ -88,7 +88,14 @@ class Queue(object):
 
     def __str__(self):
         '''Loop through your queue and print each Node's data.'''
-        pass
+        nodeData = self.__tail.getData()
+        strResult = '['
+        while nodeData is not self.__head.getData():
+            nodeData = self.dequeue()
+            strResult = strResult + (str(nodeData) + ', ')
+
+        strResult = strResult + ']'
+        return strResult
 
     def enqueue(self, newData):
         '''Create a new node whose data is newData and whose next node is null
@@ -109,9 +116,14 @@ class Queue(object):
         #          to hold important information
         #  Hint: Return null on a empty Queue
         # Hint: Return the element(data) that is dequeued.
-        if self.isEmpty() is True:
-            return None
-        elif self.__head == self.__tail:
+        try:
+            if self.isEmpty() is True:
+                raise AttributeError
+        except AttributeError:
+            print("one or both the values of", tempU, " and ", tempV,
+                  "are strings, only allowed ints or floats")
+            raise TypeError
+        if self.__head == self.__tail:
             result = self.__head.getData()
             self.__head = None
             self.__tail = None
@@ -122,13 +134,17 @@ class Queue(object):
             while result.getNext() is not self.__head:
                 prev = result
                 result = result.getNext()
-
-
+            self.__head = prev
+            return result.getData()
 
 
     def isEmpty(self):
         '''Check if the Queue is empty.'''
-        pass
+        if self.__head is None:
+            return True
+        else:
+            return False
+
 
 
 class Stack(object):

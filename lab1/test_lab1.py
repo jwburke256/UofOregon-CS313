@@ -2,8 +2,7 @@ import lab1
 import unittest
 
 class T0_TestingQueue(unittest.TestCase):
-
-    def test_basic_enqueue(self):
+    def test_basic_enqueue_str(self):
         # testing the basic enqueue operation
         print("\n")
         q = lab1.Queue()
@@ -15,25 +14,38 @@ class T0_TestingQueue(unittest.TestCase):
         self.assertEqual(q.__str__(), '[1, 2, 3, 4]')
         print("\n")
 
-class T1_TestingStack(unittest.TestCase):
-
+class T1_TestingQueue(unittest.TestCase):
     def test_is_empty_false(self):
         # testing if queue is empty
         print("\n")
-        s = lab1.Stack()
-        s.push("4")
-        print("return false if the stack is not empty")
+        q = lab1.Queue()
+        q.enqueue("4")
+        print("return false if the Queue is not empty")
         self.assertEqual(s.isEmpty(), False)
         print("\n")
 
+class T2_TestingQueue(unittest.TestCase):
     def test_is_empty_true(self):
         # testing if queue is empty
         print("\n")
-        s = lab1.Stack()
-        print("return true if the stack is empty")
-        self.assertEqual(s.isEmpty(), True)
+        q = lab1.Queue()
+        print("return true if the Queue is empty")
+        self.assertEqual(q.isEmpty(), True)
         print("\n")
 
+class T3_TestingQueue(unittest.TestCase):
+    def test_basic_dequeue(self):
+        # testing the basic push operation
+        print("\n")
+        q = lab1.Queue()
+        q.enqueue(1)
+        q.enqueue(2)
+
+        self.assertEqual(s.dequeue(), 1)
+        self.assertEqual(s.__str__(), '[1]')
+        print("\n")
+
+class T4_TestingStack(unittest.TestCase):
     def test_basic_stack_str(self):
         # testing the basic push operation
         print("\n")
@@ -46,6 +58,26 @@ class T1_TestingStack(unittest.TestCase):
         self.assertEqual(s.__str__(), '[1, 2, 3, 4]')
         print("\n")
 
+class T5_TestingStack(unittest.TestCase):
+    def test_is_empty_false(self):
+        # testing if queue is empty
+        print("\n")
+        s = lab1.Stack()
+        s.push("4")
+        print("return false if the stack is not empty")
+        self.assertEqual(s.isEmpty(), False)
+        print("\n")
+
+class T6_TestingStack(unittest.TestCase):
+    def test_is_empty_true(self):
+        # testing if queue is empty
+        print("\n")
+        s = lab1.Stack()
+        print("return true if the stack is empty")
+        self.assertEqual(s.isEmpty(), True)
+        print("\n")
+
+class T7_TestingStack(unittest.TestCase):
     def test_basic_stack_pop(self):
         # testing the basic push operation
         print("\n")
@@ -57,6 +89,7 @@ class T1_TestingStack(unittest.TestCase):
         self.assertEqual(s.__str__(), '[1]')
         print("\n")
 
+class T8_TestingStack(unittest.TestCase):
     def test_stack_empty_pop(self):
         # testing the basic push operation
         print("\n")
