@@ -21,7 +21,7 @@ class T1_TestingQueue(unittest.TestCase):
         q = lab1.Queue()
         q.enqueue("4")
         print("return false if the Queue is not empty")
-        self.assertEqual(s.isEmpty(), False)
+        self.assertEqual(q.isEmpty(), False)
         print("\n")
 
 class T2_TestingQueue(unittest.TestCase):
@@ -40,9 +40,10 @@ class T3_TestingQueue(unittest.TestCase):
         q = lab1.Queue()
         q.enqueue(1)
         q.enqueue(2)
+        q.enqueue(3)
 
-        self.assertEqual(s.dequeue(), 1)
-        self.assertEqual(s.__str__(), '[1]')
+        self.assertEqual(q.dequeue(), 1)
+        self.assertEqual(q.__str__(), '[2, 3]')
         print("\n")
 
 class T4_TestingStack(unittest.TestCase):
@@ -99,15 +100,44 @@ class T8_TestingStack(unittest.TestCase):
         print("\n")
 
 
-class T2_TestingPalindrome(unittest.TestCase):
-
-    def test_basic_string(self):
-        # testing with basic string
+class T9_TestingPalindrome(unittest.TestCase):
+    def test_basic_string_nonpal(self):
+        # testing with basic non-palindrome string
         print("\n")
-        string = "hello"
+        string = "Hello"
         p = lab1.isPalindrome(string)
         print("The string being tested is -> ", string)
         self.assertEqual(p, False)
+        print("\n")
+
+class T10_TestingPalindrome(unittest.TestCase):
+    def test_basic_string_pal(self):
+        # testing with basic palindrome string
+        print("\n")
+        string = "mygym"
+        p = lab1.isPalindrome(string)
+        print("The string being tested is -> ", string)
+        self.assertEqual(p, True)
+        print("\n")
+
+class T11_TestingPalindrome(unittest.TestCase):
+    def test_string_with_spaces(self):
+        # testing with basic palindrome string
+        print("\n")
+        string = "ni t I n"
+        p = lab1.isPalindrome(string)
+        print("The string being tested is -> ", string)
+        self.assertEqual(p, True)
+        print("\n")
+
+class T12_TestingPalindrome(unittest.TestCase):
+    def test_string_final_case(self):
+        # testing with basic palindrome string
+        print("\n")
+        string = "TaCo CaT"
+        p = lab1.isPalindrome(string)
+        print("The string being tested is -> ", string)
+        self.assertEqual(p, True)
         print("\n")
 
 if __name__ == '__main__':
