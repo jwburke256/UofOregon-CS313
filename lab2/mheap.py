@@ -8,7 +8,7 @@ class max_heap(object):
     fixed size or uses an existing list.
     """
 
-    def __init__(self, size = 20, data = None):
+    def __init__(self, size=20, data=None):
         """Initialize a binary max-heap.
 
         size: Total capacity of the heap.
@@ -26,10 +26,9 @@ class max_heap(object):
             self.max_size = size
             self.length = 0
             self.heap = [None] * size
-        
+
     def get_heap(self):
         return self.heap
-
 
     def insert(self, data):
         """Insert an element into the heap.
@@ -38,13 +37,16 @@ class max_heap(object):
         # Tips : insert 'data' at the end of the list initially
         #      : swap with its parent until the parent is larger or you 
         #      : reach the root
-        if self.length == self.max_size:
-            return
-        self.length = self.length + 1
-        self.heap[self.length-1] = data
-        self.__swap(self.heap[0], self.heap[self.length-1])
-        
+        try:
+            if self.length == self.max_size:
+                raise IndexError
+        except IndexError:
+            print("Heap is full")
+            raise IndexError
 
+        self.length = self.length + 1
+        self.heap[self.length - 1] = data
+        self.__swap(self.heap[0], self.heap[self.length - 1])
 
     def peek(self):
         """Return the maximum value in the heap."""
@@ -61,27 +63,37 @@ class max_heap(object):
         #     : swap first element with the last element of the list.
         #     : Remove that last element from the list and return it.
         #     : call __heapify to fix the heap
-        
-        pass
+        try:
+            if self.length == 0:
+                raise KeyError
+        except KeyError:
+            print("Heap is empty")
+            raise KeyError
 
+        self.__swap(self.heap[0], self.heap[self.length - 1])
+        maxVal = self.heap[self.length - 1]
+        self.length = self.length - 1
+        self.__heapify(0, self.length)
+        return maxVal
 
-    def __heapify(self, curr_index, list_length = None):
+    def __heapify(self, curr_index, list_length=None):
         # helper function for moving elements down in the heap
         # Page 157 of CLRS book
         l = self.__get_left(curr_index)
         r = self.__get_right(curr_index)
-        if l <= self.max_size and self[l]  > self[curr_index]:
-            largest = l
+        if l <= self.length-1:
+            if self.heap[l] > self.heap[curr_index]:
+                largest = l
         else:
             largest = curr_index
-        if r <= self.max_size and self[r] > self[largest]:
-            largest = r
+        if r <= self.length-1:
+            if self.heap[r] > self.heap[largest]:
+                largest = r
         else:
             largest = curr_index
         if largest != curr_index:
-            self.__swap(self[curr_index], self[largest])
+            self.__swap(self.heap[curr_index], self.heap[largest])
             self.__heapify(largest, list_length)
-
 
     def build_heap(self):
         # builds max heap from the list l.
@@ -90,7 +102,6 @@ class max_heap(object):
         n = self.length
         for i in range(int(self.length / 2), 1, -1):
             self.__heapify(i, self.length)
-
 
     ''' Optional helper methods may be used if required '''
     ''' You may create your own helper methods as required.'''
@@ -106,22 +117,17 @@ class max_heap(object):
         return parent
 
     def __get_left(self, loc):
-        return 2*loc + 1
+        return 2 * loc + 1
 
     def __get_right(self, loc):
-        return 2*loc + 2
-        
+        return 2 * loc + 2
 
     def __swap(self, a, b):
         # swap elements located at indexes a and b of the heap
         temp = self.heap[a]
         self.heap[a] = self.heap[b]
         self.heap[b] = temp
-    
 
-
-
-    
 
 def heap_sort(l):
     """Sort a list in place using heapsort."""
@@ -131,4 +137,3 @@ def heap_sort(l):
     #     : Use build_heap() to turn the list into a valid heap
     #     : Repeatedly extract the maximum and place it at the end of the list
     #     : Refer page 161 in the CLRS textbook for the exact procedure
-    
