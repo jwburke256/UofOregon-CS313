@@ -1,3 +1,9 @@
+class IsEmptyError(Exception):
+    """
+    A class used to raise created IsEmptyError.
+    """
+    pass
+
 class Node(object):
     """
     A class to represent a node.
@@ -88,7 +94,14 @@ class Queue(object):
 
     def __str__(self):
         '''Loop through your queue and print each Node's data.'''
-        pass
+        node = self.__tail
+        strResult = ']'
+        while node.getNext() is not None:
+            strResult = (', ' + str(node.getData())) + strResult
+            node = node.getNext()
+
+        strResult = '[' + str(node.getData()) + strResult
+        return strResult
 
     def enqueue(self, newData):
         '''Create a new node whose data is newData and whose next node is null
@@ -99,8 +112,10 @@ class Queue(object):
             self.__head = newNode
             self.__tail = newNode
         else:
-            newNode.setNext = self.__tail
+            newNode.setNext(self.__tail)
             self.__tail = newNode
+            #print(self.__tail.getData())
+            #print(self.__tail.getNext())
 
     def dequeue(self):
         '''Return the head of the Queue
@@ -109,26 +124,41 @@ class Queue(object):
         #          to hold important information
         #  Hint: Return null on a empty Queue
         # Hint: Return the element(data) that is dequeued.
-        if self.isEmpty() is True:
-            return None
-        elif self.__head == self.__tail:
+        try:
+            if self.isEmpty() is True:
+                raise IsEmptyError
+        except IsEmptyError:
+            print("Empty Queue cannot DeQueue")
+            raise IsEmptyError
+        if self.__head == self.__tail:
             result = self.__head.getData()
             self.__head = None
             self.__tail = None
             return result
+        elif self.__tail.getNext() == self.__head:
+            result = self.__head.getData()
+            self.__head = self.__tail
+            self.__head.setNext(None)
+            return result
         else:
             result = self.__tail
             prev = None
-            while result.getNext() is not self.__head:
+            # loops through queue to get pointer before head
+            while result.getNext() is not None:
                 prev = result
                 result = result.getNext()
-
-
+            self.__head = prev
+            self.__head.setNext(None)
+            return result.getData()
 
 
     def isEmpty(self):
         '''Check if the Queue is empty.'''
-        pass
+        if self.__head is None:
+            return True
+        else:
+            return False
+
 
 
 class Stack(object):
@@ -207,6 +237,22 @@ def isPalindrome(s):
     '''Use your Queue and Stack class to test wheather an input is a palindrome.'''
     myStack = Stack()
     myQueue = Queue()
+    sLower = s.lower()
+    sLower = sLower.strip()
+    for c in sLower:
+        myStack.push(c)
+        myQueue.enqueue(c)
+    print(str(myStack))
+    print(str(myQueue))
+    while myQueue.isEmpty() is not True:
+        sChar = myStack.pop()
+        qChar = myQueue.dequeue()
+        while sChar == ' ':
+            sChar = myStack.pop()
+        while qChar == ' ':
+            qChar = myQueue.dequeue()
+        if sChar != qChar:
+            return False
 
     ## Helper function ##
     # print("stack data")
@@ -216,7 +262,7 @@ def isPalindrome(s):
     # myQueue.printQueue()
 
     # Return appropriate value
-    return
+    return True
 
 
 def isPalindromeEC(s):
