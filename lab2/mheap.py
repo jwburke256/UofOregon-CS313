@@ -38,14 +38,20 @@ class max_heap(object):
         # Tips : insert 'data' at the end of the list initially
         #      : swap with its parent until the parent is larger or you 
         #      : reach the root
-        
-        pass
+        if self.length == self.max_size:
+            return
+        self.length = self.length + 1
+        self.heap[self.length-1] = data
+        self.__swap(self.heap[0], self.heap[self.length-1])
         
 
 
     def peek(self):
         """Return the maximum value in the heap."""
-        pass
+        if self.length == 0:
+            return None
+        else:
+            return self.heap[0]
 
     def extract_max(self):
         """Remove and return the maximum value in the heap.
@@ -62,13 +68,28 @@ class max_heap(object):
     def __heapify(self, curr_index, list_length = None):
         # helper function for moving elements down in the heap
         # Page 157 of CLRS book
-        pass
+        l = self.__get_left(curr_index)
+        r = self.__get_right(curr_index)
+        if l <= self.max_size and self[l]  > self[curr_index]:
+            largest = l
+        else:
+            largest = curr_index
+        if r <= self.max_size and self[r] > self[largest]:
+            largest = r
+        else:
+            largest = curr_index
+        if largest != curr_index:
+            self.__swap(self[curr_index], self[largest])
+            self.__heapify(largest, list_length)
+
 
     def build_heap(self):
         # builds max heap from the list l.
         # Tip: call __heapify() to build to the list
         #    : Page 157 of CLRS book
-        pass
+        n = self.length
+        for i in range(int(self.length / 2), 1, -1):
+            self.__heapify(i, self.length)
 
 
     ''' Optional helper methods may be used if required '''
