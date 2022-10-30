@@ -88,9 +88,10 @@ class max_heap(object):
 
         maxVal = self.heap[0]
         self.__swap(0, (self.length - 1))
+        self.heap[self.length-1] = None
         #maxVal = self.heap[self.length - 1]
-        self.length = self.length - 1
-        self.__heapify(0, self.length-1)
+        self.length -= 1
+        self.__heapify(0, self.length)
         return maxVal
 
     def __heapify(self, curr_index, list_length=None):
@@ -135,10 +136,10 @@ class max_heap(object):
         return parent
 
     def __get_left(self, loc):
-        return 2 * loc + 1
+        return 2 * loc
 
     def __get_right(self, loc):
-        return 2 * loc + 2
+        return 2 * loc + 1
 
     def __swap(self, a, b):
         # swap elements located at indexes a and b of the heap
