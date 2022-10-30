@@ -6,7 +6,6 @@ class max_heap(object):
     doesn't have built-in arrays, the underlying implementation uses a
     Python list instead. When initialized, max_heap creates a new list of
     fixed size or uses an existing list.
-
     ...
 
 
