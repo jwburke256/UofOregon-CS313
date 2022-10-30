@@ -6,18 +6,65 @@ class max_heap(object):
     doesn't have built-in arrays, the underlying implementation uses a
     Python list instead. When initialized, max_heap creates a new list of
     fixed size or uses an existing list.
+
+    ...
+
+
+    Attributes
+    ----------
+    max_size: int
+        maximum size of the heap
+    length : int
+        Current length of the heap based on amount of data
+    heap : list
+        Data that resides in the heap given as a list
+
+    Methods
+    -------
+    get_heap():
+        Returns the data residing in the heap as a list
+    insert(data):
+        Inserts an element into the heap.
+        Raises IndexError if the heap is full.
+    peek():
+        Returns the maximum value in the heap without removing it.
+    extract_max():
+        Removes and returns the maximum value in the heap.
+        Raises KeyError if the heap is empty.
+    __heapify(curr_index, list_length=None):
+        Given a current index and length of the list, checks
+        the children nodes to verify if the current node is bigger.
+        If not it swaps the parent with the largest child, and then
+        recursively calls on the child. This helps maintain the property of
+        the max_heap
+    build_heap():
+        builds a max heap from the current heap which is an unordered
+        list.
+    __get_parent(loc):
+        gets the parent node index when given the current child node index
+    __get_left(loc):
+        gets the left child node index when given a parent node index
+    __get_right(loc):
+        gets the right child node index when given a parent node index
+    __swap(a, b):
+        swap elements located at given indexes a and b of the heap
     """
+
 
     def __init__(self, size=20, data=None):
         """Initialize a binary max-heap.
 
-        size: Total capacity of the heap.
-        data: List containing the desired heap contents. 
-              The list is used in-place, not copied, so its contents 
-              will be modified by heap operations.
-              If data is specified, then the size field is ignored."""
+        Parameters
+        ----------
+        size : int
+            Total capacity of the heap.
+        data : list
+            List containing the desired heap contents.
+            The list is used in-place, not copied, so its contents
+            will be modified by heap operations.
+            If data is specified, then the size field is ignored.
+        """
 
-        # Add to this constructor as needed
         if data is not None:
             self.max_size = len(data)
             self.length = len(data)
@@ -28,11 +75,11 @@ class max_heap(object):
             self.heap = [None] * size
 
     def get_heap(self):
+        """Returns the data residing in the heap as a list"""
         return self.heap
 
     def insert(self, data):
-        """Insert an element into the heap.
-
+        """Inserts an element into the heap.
         Raises IndexError if the heap is full."""
         # Tips : insert 'data' at the end of the list initially
         #      : swap with its parent until the parent is larger or you 
@@ -59,15 +106,14 @@ class max_heap(object):
 
 
     def peek(self):
-        """Return the maximum value in the heap."""
+        """Returns the maximum value in the heap without removing it."""
         if self.length == 0:
             return None
         else:
             return self.heap[0]
 
     def extract_max(self):
-        """Remove and return the maximum value in the heap.
-
+        """Removes and returns the maximum value in the heap.
         Raises KeyError if the heap is empty."""
         # Tips: Maximum element is first element of the list
         #     : swap first element with the last element of the list.
@@ -88,6 +134,11 @@ class max_heap(object):
         return maxVal
 
     def __heapify(self, curr_index, list_length=None):
+        """Given a current index and length of the list, checks
+        the children nodes to verify if the current node is bigger.
+        If not it swaps the parent with the largest child, and then
+        recursively calls on the child. This helps maintain the property of
+        the max_heap"""
         # helper function for moving elements down in the heap
         # Page 157 of CLRS book
         l = self.__get_left(curr_index)
@@ -104,7 +155,8 @@ class max_heap(object):
             self.__heapify(largest, list_length)
 
     def build_heap(self):
-        # builds max heap from the list l.
+        """builds a max heap from the current heap which is an unordered
+        list."""
         # Tip: call __heapify() to build to the list
         #    : Page 157 of CLRS book
         for i in range(((self.length-1) // 2), -1, -1):
@@ -115,6 +167,7 @@ class max_heap(object):
     ''' But do not modify the function definitions of any of the above methods'''
 
     def __get_parent(self, loc):
+        """gets the parent node index when given the current child node index"""
         # left child has odd location index
         # right child has even location index
         if loc % 2 == 0:
@@ -124,20 +177,23 @@ class max_heap(object):
         return parent
 
     def __get_left(self, loc):
+        """gets the left child node index when given a parent node index"""
         return 2 * loc + 1
 
     def __get_right(self, loc):
+        """gets the right child node index when given a parent node index"""
         return 2 * loc + 2
 
     def __swap(self, a, b):
-        # swap elements located at indexes a and b of the heap
+        """swap elements located at given indexes a and b of the heap"""
         temp = self.heap[a]
         self.heap[a] = self.heap[b]
         self.heap[b] = temp
 
 
 def heap_sort(l):
-    """Sort a list in place using heapsort."""
+    """Sorts a given list in place using heapsort then returns the sorted
+    list in ascending order."""
     # Note: the heap sort function is outside the class
     #     : The sorted list should be in ascending order
     # Tips: Initialize a heap using the provided list
