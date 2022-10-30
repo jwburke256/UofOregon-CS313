@@ -39,18 +39,12 @@ class max_heap(object):
         #      : reach the root
         try:
             if self.length == self.max_size:
-                #print(str(self.length))
                 raise IndexError
         except IndexError:
             print("Heap is full")
             raise IndexError
-        #print(str(self.length))
         self.length += 1
-
         self.heap[self.length - 1] = data
-        #print(str(self.heap[(self.length - 1)]))
-        #self.__swap(0, (self.length - 1))
-        #self.__heapify(0, self.length)
         index = (self.length - 1)
         parent = self.__get_parent(index)
         if index == 0:
@@ -89,7 +83,6 @@ class max_heap(object):
         maxVal = self.heap[0]
         self.__swap(0, (self.length - 1))
         self.heap[self.length-1] = None
-        #maxVal = self.heap[self.length - 1]
         self.length -= 1
         self.__heapify(0, self.length)
         return maxVal
@@ -103,13 +96,9 @@ class max_heap(object):
         if l <= list_length-1:
             if self.heap[l] > self.heap[largest]:
                 largest = l
-        else: # (not needed)
-            largest = curr_index
         if r <= list_length-1:
             if self.heap[r] > self.heap[largest]:
                 largest = r
-        else:
-            largest = curr_index
         if largest != curr_index:
             self.__swap(curr_index, largest)
             self.__heapify(largest, list_length)
@@ -118,8 +107,7 @@ class max_heap(object):
         # builds max heap from the list l.
         # Tip: call __heapify() to build to the list
         #    : Page 157 of CLRS book
-        #print(str(int((self.length-1) / 2)))
-        for i in range(int((self.length-1) / 2), -1, -1):
+        for i in range(((self.length-1) // 2), -1, -1):
             self.__heapify(i, self.length)
 
     ''' Optional helper methods may be used if required '''
@@ -136,10 +124,10 @@ class max_heap(object):
         return parent
 
     def __get_left(self, loc):
-        return 2 * loc
+        return 2 * loc + 1
 
     def __get_right(self, loc):
-        return 2 * loc + 1
+        return 2 * loc + 2
 
     def __swap(self, a, b):
         # swap elements located at indexes a and b of the heap
@@ -161,7 +149,4 @@ def heap_sort(l):
     print(heap.get_heap())
     for i in range(len(l)-1, -1, -1):
         l[i] = heap.extract_max()
-        print(i)
-        print(l[i])
-        print(heap.get_heap())
     return l
