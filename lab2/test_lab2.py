@@ -64,6 +64,19 @@ class T2_pqueue_extract_max(unittest.TestCase):
             pq.extract_max()
         print("\n")
 
+    def test_3_pq_extract_max(self):
+        print("extract and return the maximum element of the queue")
+        print("\n")
+        pq = pqueue.pqueue(5)
+        pq.insert(2)
+        pq.insert(1)
+        pq.insert(3)
+        l = []
+        l.append(pq.extract_max())
+        l.append(pq.extract_max())
+        l.append(pq.extract_max())
+        self.assertEqual(l, [3, 2, 1])
+        print("\n")
 
 class T5_heap_sort(unittest.TestCase):
 
