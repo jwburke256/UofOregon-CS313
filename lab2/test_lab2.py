@@ -18,6 +18,19 @@ class T0_pqueue_insert(unittest.TestCase):
         self.assertEqual(pq_list, [5,4,2,1,3])
         print("\n")
 
+    def test_2_pq_full(self):
+        print("Return IndexError if the queue is full.")
+        print("\n")
+        pq = pqueue.pqueue(5)
+        pq.insert(1)
+        pq.insert(2)
+        pq.insert(3)
+        pq.insert(4)
+        pq.insert(5)
+        with self.assertRaises(Exception):
+            pq.insert(6)
+        print("\n")
+
 class T1_pqueue_peek(unittest.TestCase):
 
     def test_1_pq_peek(self):
@@ -41,6 +54,14 @@ class T2_pqueue_extract_max(unittest.TestCase):
         pq.insert(2)
         pq.insert(3)
         self.assertEqual(pq.extract_max(), 3)
+        print("\n")
+
+    def test_2_pq_extract_max_empty(self):
+        print("Raise KeyError if queue is empty")
+        print("\n")
+        pq = pqueue.pqueue(5)
+        with self.assertRaises(Exception):
+            pq.extract_max()
         print("\n")
 
 

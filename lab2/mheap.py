@@ -39,14 +39,30 @@ class max_heap(object):
         #      : reach the root
         try:
             if self.length == self.max_size:
+                #print(str(self.length))
                 raise IndexError
         except IndexError:
             print("Heap is full")
             raise IndexError
+        #print(str(self.length))
+        self.length += 1
 
-        self.length = self.length + 1
         self.heap[self.length - 1] = data
-        self.__swap(self.heap[0], self.heap[self.length - 1])
+        #print(str(self.heap[(self.length - 1)]))
+        #self.__swap(0, (self.length - 1))
+        #self.__heapify(0, self.length)
+        index = (self.length - 1)
+        parent = self.__get_parent(index)
+        if index == 0:
+            return
+        while (self.heap[index] > self.heap[parent]) and (
+                self.heap[parent] is not None):
+            self.__swap(index, parent)
+            index = parent
+            if index == 0:
+                break
+            parent = self.__get_parent(index)
+
 
     def peek(self):
         """Return the maximum value in the heap."""
@@ -70,7 +86,7 @@ class max_heap(object):
             print("Heap is empty")
             raise KeyError
 
-        self.__swap(self.heap[0], self.heap[self.length - 1])
+        self.__swap(0, (self.length - 1))
         maxVal = self.heap[self.length - 1]
         self.length = self.length - 1
         self.__heapify(0, self.length)
@@ -81,26 +97,27 @@ class max_heap(object):
         # Page 157 of CLRS book
         l = self.__get_left(curr_index)
         r = self.__get_right(curr_index)
-        if l <= self.length-1:
-            if self.heap[l] > self.heap[curr_index]:
+        largest = curr_index
+        if l <= list_length-1:
+            if self.heap[l] > self.heap[largest]:
                 largest = l
-        else:
+        else: # (not needed)
             largest = curr_index
-        if r <= self.length-1:
+        if r <= list_length-1:
             if self.heap[r] > self.heap[largest]:
                 largest = r
         else:
             largest = curr_index
         if largest != curr_index:
-            self.__swap(self.heap[curr_index], self.heap[largest])
+            self.__swap(curr_index, largest)
             self.__heapify(largest, list_length)
 
     def build_heap(self):
         # builds max heap from the list l.
         # Tip: call __heapify() to build to the list
         #    : Page 157 of CLRS book
-        n = self.length
-        for i in range(int(self.length / 2), 1, -1):
+        #print(str(int((self.length-1) / 2)))
+        for i in range(int((self.length-1) / 2), -1, -1):
             self.__heapify(i, self.length)
 
     ''' Optional helper methods may be used if required '''
@@ -110,17 +127,17 @@ class max_heap(object):
     def __get_parent(self, loc):
         # left child has odd location index
         # right child has even location index
-        # if loc % 2 == 0:
-        #     parent = int((loc - 2) / 2)
-        # else:
-        parent = int((loc - 1) / 2)
+        if loc % 2 == 0:
+            parent = int((loc - 2) / 2)
+        else:
+            parent = int((loc - 1) / 2)
         return parent
 
     def __get_left(self, loc):
-        return 2 * loc + 1
+        return 2 * loc
 
     def __get_right(self, loc):
-        return 2 * loc + 2
+        return 2 * loc + 1
 
     def __swap(self, a, b):
         # swap elements located at indexes a and b of the heap
@@ -137,3 +154,12 @@ def heap_sort(l):
     #     : Use build_heap() to turn the list into a valid heap
     #     : Repeatedly extract the maximum and place it at the end of the list
     #     : Refer page 161 in the CLRS textbook for the exact procedure
+    heap = max_heap((len(l)), l)
+    heap.build_heap()
+    print(heap.get_heap())
+    for i in range(len(l)-1, -1, -1):
+        l[i] = heap.extract_max()
+        print(i)
+        print(l[i])
+        print(heap.get_heap())
+    return l
