@@ -125,15 +125,15 @@ class Tree(object):
         
         #Yield data of the correct node/s
         if curr_node is not None:
-            if traversal_type is 1:
+            if traversal_type == 1:
                 yield from self.__traverse(curr_node.left, traversal_type)
                 yield curr_node.data
                 yield from self.__traverse(curr_node.right, traversal_type)
-            if traversal_type is 2:
+            if traversal_type == 2:
                 yield curr_node.data
                 yield from self.__traverse(curr_node.left, traversal_type)
                 yield from self.__traverse(curr_node.right, traversal_type)
-            if traversal_type is 3:
+            if traversal_type == 3:
                 yield from self.__traverse(curr_node.left, traversal_type)
                 yield from self.__traverse(curr_node.right, traversal_type)
                 yield curr_node.data
@@ -189,7 +189,7 @@ class Tree(object):
             parent.parent.left = child
         else:
             parent.parent.right = child
-        if child is None:
+        if child is not None:
             child.parent = parent.parent
 
     def delete(self, data):
@@ -210,20 +210,43 @@ class Tree(object):
         except KeyError:
             print("Given node does not exist in current Binary Search Tree")
             raise KeyError
-        if node.left is None:
+        # The node is root
+        if (node.left is None) and (node.right is None) and (node.parent is
+        None):
+            self.root = None
+        # The node has no children and is not root
+        elif (node.left is None) and (node.right is None):
+            parent = node.parent
+            if parent.right is node:
+                parent.right = None
+            else:
+                parent.left = None
+            return None
+        # left node is only child
+        elif node.left is None:
+            # replace node with it's right child
             self.__transplant(node, node.right)
+            return None
+        # right node is only child
         elif node.right is None:
+            # replace node with it's left child
             self.__transplant(node, node.left)
+            return None
         else:
-            y = self.min()
-            if y is not node.right:
-                self.__transplant(y, y.right)
-                y.right = node.right
-                y.right.parent = y
-            self.__transplant(node, y)
-            y.left = node.left
-            y.left.parent = node
-        return None
+            succ = self.find_successor(node.data) # succ is node's successor
+            if succ is not node.right:
+                # replace succ with it's right child
+                self.__transplant(succ, succ.right)
+                # node's right child becomes succ right child
+                succ.right = node.right
+                succ.right.parent = succ
+            # replace node with succ
+            self.__transplant(node, succ)
+            # node's left child given to succ which should have no left child
+            # yet
+            succ.left = node.left
+            succ.left.parent = node
+            return None
 
 
 
