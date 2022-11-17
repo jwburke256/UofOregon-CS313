@@ -31,6 +31,35 @@ class T0_tree__insert(unittest.TestCase):
 
         print("\n")
 
+    def test_unbalanced_binary_search_tree(self):
+        # Added test
+        print("\n")
+        print("tree_insert_with_individual_check")
+        t = lab3.Tree()
+
+        t.insert(1)
+        t.insert(2)
+        t.insert(3)
+        t.insert(4)
+        t.insert(5)
+        t.insert(6)
+        t.insert(7)
+        maximum = t.max()
+
+        # The following check is without using tree as an iterator (which
+        # uses inorder traversal)
+        # So this function also does not check the implementation of the
+        # traversal function
+
+        self.assertEqual(t.root.data, 1)
+        self.assertEqual(t.root.left, None)
+        self.assertEqual(t.root.right.data, 2)
+        self.assertEqual(t.root.right.right.data, 3)
+        self.assertEqual(t.root.right.right.right.right.data, 5)
+        self.assertEqual(maximum, 7)
+
+        print("\n")
+
 
 class T1_min_and_max(unittest.TestCase):
 
@@ -53,6 +82,21 @@ class T1_min_and_max(unittest.TestCase):
         self.assertEqual(maximum, 7)
 
         print("\n")
+
+    def test_min_and_max_unbalanced_tree(self):
+        # added test
+        print("\n")
+        print("tree_insert_with_individual_check")
+        t = lab3.Tree()
+
+        t.insert(1)
+        t.insert(2)
+        t.insert(3)
+        minimum = t.min()
+        self.assertEqual(minimum, 1)
+        maximum = t.max()
+        self.assertEqual(maximum, 3)
+
 
 class T2_Traversal(unittest.TestCase):
 
@@ -81,6 +125,11 @@ class T2_Traversal(unittest.TestCase):
         self.assertEqual(preorder, [4, 2, 1, 3, 6, 5, 7])
         print("\n")
 
+    def test__traverse(self):
+        print("\n")
+        print("Checking all the three traverses")
+        t = lab3.Tree()
+        t._Tree__traverse
 
 
 
@@ -108,6 +157,14 @@ class T3_successor(unittest.TestCase):
         self.assertEqual(medium_success, 13)
         self.assertEqual(tough_success, 8)
 
+        print("\n")
+
+    def test_successor_empty(self):
+        print("\n")
+        print("successor function on emptry tree")
+        tree_success = lab3.Tree()
+        with self.assertRaises(Exception):
+            empty = tree_success.find_successor(8).data
         print("\n")
 
 
@@ -147,6 +204,34 @@ class T4_delete(unittest.TestCase):
 
         print("\n")
 
+    def test_delete_empty(self):
+        print("\n")
+        print("delete function on empty tree")
+        t = lab3.Tree()
+        with self.assertRaises(Exception):
+            deleted = t.delete(8)
+        print("\n")
+
+    def test_delete_node_not_in_tree(self):
+        # added test case
+        print("\n")
+        print("delete function with a given node not in the tree")
+        t = lab3.Tree()
+        t.insert(8)
+        t.insert(3)
+        t.insert(10)
+        t.insert(1)
+        t.insert(6)
+        t.insert(4)
+
+        l1 = [node for node in t]
+        self.assertEqual(l1, [1, 3, 4, 6, 8, 10])
+        with self.assertRaises(Exception):
+            deleted = t.delete(7)
+        l2 = [node for node in t]
+        self.assertEqual(l2, [1, 3, 4, 6, 8, 10])
+
+
 class T5_contains(unittest.TestCase):
 
     def test_contains(self):
@@ -165,6 +250,20 @@ class T5_contains(unittest.TestCase):
         self.assertEqual(t.contains(13), True)
         self.assertEqual(t.contains(15), False)
         print("\n")
+
+    def test_contains_empty_tree(self):
+        # added test case
+        print("\n")
+        print("contains function")
+        t = lab3.Tree()
+        self.assertEqual(t.contains(15), False)
+
+    def test__find_node(self):
+        # added test case
+        print("\n")
+        print("find node private function")
+        t = lab3.Tree()
+
 
 if __name__ == '__main__' :
     unittest.main()
