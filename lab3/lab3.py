@@ -159,6 +159,9 @@ class Tree(object):
         except KeyError:
             print("Given node does not exist in current Binary Search Tree")
             raise KeyError
+        # Check to see if node is last from in order walk
+        if node.data == self.max():
+            return None
         # Right subtree not empty, successor is leftmost node in right subtree or right node itself
         if node.right is not None:
             node = node.right
@@ -248,26 +251,5 @@ class Tree(object):
             succ.left.parent = node
             return None
 
-
-
-        # node = self.__find_node(data)
-        # try:
-        #     if node is None:
-        #         raise KeyError
-        # except KeyError:
-        #     print("Given node does not exist in current Binary Search Tree")
-        #     raise KeyError
-        # # The node is root
-        # if (node.left is None) and (node.right is None) and (node.parent is None):
-        #     self.root = None
-        # # The node has no children and is
-        # elif (node.left is None) and (node.right is None):
-        #     node.parent = None
-        # # The node has one child
-        # elif ((node.left is not None) and (node.right is None)) or ((node.left is None) and (node.right is not None)):
-        #     if node.left is not None:
-        #         child = node.left
-        #         parent = node.parent
-        #         parent.
 
 

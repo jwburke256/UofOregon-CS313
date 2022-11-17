@@ -167,6 +167,18 @@ class T3_successor(unittest.TestCase):
             empty = tree_success.find_successor(8).data
         print("\n")
 
+    def test_successor_single_node(self):
+        # added test case
+        print("\n")
+        print("successor function with single node")
+        tree_success = lab3.Tree()
+        tree_success.insert(8)
+        # max = tree_success.max()
+        # print(max)
+        none_success = tree_success.find_successor(8)
+
+        self.assertEqual(none_success, None)
+
 
 class T4_delete(unittest.TestCase):
 
