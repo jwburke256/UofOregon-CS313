@@ -10,7 +10,50 @@ class Node(object):
 
 
 class rb_tree(object):
+    """Red Black Tree
 
+            Supports most standard Red Black Tree operations (print_tree, find_node, find_successor,
+            insert, delete). Can be used for storing integer data in a sorted order, and then able to
+            be printed out in a specified manner with calling the desired traversal
+            method (inorder, preorder, postorder). Tree has a maximum height of
+            log n, as well as the ability to self balance when needed.
+            ...
+
+
+            Attributes
+            ----------
+            root: int
+                first node in the Binary Search Tree
+            sentinel : Node
+                sentinel node that contains node data, with the only characterstic being black color
+            sentinel.parent: Node
+                further set up sentinel node
+            sentinel.left: Node
+                further set up sentinel node
+            sentinel.right: Node
+                further set up sentinel node
+
+            Methods
+            -------
+            left_rotate(node):
+                Function used in conjunction with insert and delete in order to balance the
+                tree nodes by performing a left rotate operation with a given node. The function
+                raises an exception if the root is empty.
+            right_rotate(node):
+                Function used in conjunction with insert and delete in order to balance the
+                tree nodes by performing a right rotate operation with a given node. The function
+                raises an exception if the root is empty.
+            __rb_insert_fixup(node):
+                after inserting a new node to a tree, the __rb_insert_fixup function is called in
+                order to rebalance/recolor the nodes as needed in order to maintain the
+                Red/Black tree properties. The function goes through 4 different possible test cases
+                and will progress through the tree until balance is achieved.
+            __rb_delete_fixup(self, x):
+                after deleting a node from the tree, the  __rb_delete_fixup function is called in
+                order to rebalance/recolor the remaining nodes as needed in order to maintain the
+                Red/Black tree properties. The function goes through 4 different possible test cases
+                and will progress through the tree until balance is achieved once again.
+            """
     PREORDER = 1
     INORDER = 2
     POSTORDER = 3
@@ -230,7 +273,7 @@ class rb_tree(object):
         # refer page 328 of CLRS book for rotations
 
         try:
-            if current_node.right == self.sentinel:
+            if self.root is None:
                 raise KeyError
         except KeyError:
             print("Given node does not have required node to perform rotation")
@@ -259,7 +302,7 @@ class rb_tree(object):
         # refer page 328 of CLRS book for rotations
 
         try:
-            if current_node.left == self.sentinel:
+            if self.root is None:
                 raise KeyError
         except KeyError:
             print("Given node does not have required node to perform rotation")
